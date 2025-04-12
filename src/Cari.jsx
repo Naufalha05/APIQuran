@@ -1,13 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faBookOpen,
-  faMagnifyingGlass,
-  faStarAndCrescent,
-  faS,
-} from "@fortawesome/free-solid-svg-icons";
+import {faHome, faBookOpen, faMagnifyingGlass, faStarAndCrescent, } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 export default function Cari() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
@@ -18,7 +13,7 @@ export default function Cari() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://api.alquran.cloud/v1/search/${query}/all/en.pickthall`
+        `http://api.alquran.cloud/v1/search/${query}/all/id.indonesian`
       );
       const data = await response.json();
       if (data.data && data.data.matches) {
@@ -70,13 +65,13 @@ export default function Cari() {
       <div className="pt-24 px-4 flex justify-center">
         <div className="bg-white/10 backdrop-blur-md rounded-xl p-10 w-full max-w-6xl shadow-lg font-optimaAlt">
           <h1 className="text-3xl font-bold text-green-700 mb-6 text-center drop-shadow-md">
-            🔍 Pencarian Ayat Berdasarkan Kata
+            Silahkan Cari Kata Tertentu
           </h1>
           <div className="flex gap-2 mb-6">
             <input
               type="text"
               className="flex-grow border border-gray-300 rounded-xl px-4 py-2"
-              placeholder="Contoh: Abraham, Moses, truth..."
+              placeholder="Contoh: kebenaran, nabi, rahmat..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -88,27 +83,27 @@ export default function Cari() {
               Cari
             </button>
           </div>
-
           {loading ? (
-            <p className="text-center text-gray-600">Sedang mencari...</p>
+            <p className="text-center text-gray-600">🔄 Sedang mencari...</p>
           ) : (
             <div className="space-y-4 max-h-[60vh] overflow-y-auto px-2">
-              {results.map((ayah, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-md"
-                >
-                  <p className="text-sm text-gray-600 mb-1">
-                    {ayah.surah.englishName} ({ayah.surah.number}:{ayah.numberInSurah})
-                  </p>
-                  <p className="text-lg text-gray-900">{ayah.text}</p>
-                </div>
-              ))}
-              {!loading && results.length === 0 && query && (
+              {results.length > 0 ? (
+                results.map((ayah, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-md"
+                  >
+                    <p className="text-sm text-gray-600 mb-1">
+                      {ayah.surah.name} ({ayah.surah.number}:{ayah.numberInSurah})
+                    </p>
+                    <p className="text-lg text-gray-900">{ayah.text}</p>
+                  </div>
+                ))
+              ) : query ? (
                 <p className="text-center text-gray-500">
-                  Tidak ada hasil ditemukan.
+                  ❌ Tidak ada hasil ditemukan.
                 </p>
-              )}
+              ) : null}
             </div>
           )}
         </div>

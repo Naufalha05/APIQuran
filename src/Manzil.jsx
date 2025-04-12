@@ -1,53 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faBookOpen,
-  faMagnifyingGlass,
-  faStarAndCrescent,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleQuestion, faHome, faBookOpen, faMagnifyingGlass, faStarAndCrescent } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Menu  from "./Menu";
 export default function Manzil() {
   const [selectedManzil, setSelectedManzil] = useState(null);
   const [ayahs, setAyahs] = useState([]);
   const [translations, setTranslations] = useState([]);
+  const [isGlossaryOpen, setIsGlossaryOpen] = useState(false);
 
   const manzilInfo = [
-    {
-      number: 1,
-      surahs: "Al-Fatihah (1) - An-Nisa' (4)",
-      image: "/sen.jpg",
-    },
-    {
-      number: 2,
-      surahs: "Al-Ma'idah (5) - At-Tawbah (9)",
-      image: "/sel.jpg",
-    },
-    {
-      number: 3,
-      surahs: "Yunus (10) - An-Nahl (16)",
-      image: "/rab.jpg",
-    },
-    {
-      number: 4,
-      surahs: "Al-Isra' (17) - Al-Furqan (25)",
-      image: "/kam.jpg",
-    },
-    {
-      number: 5,
-      surahs: "Ash-Shu'ara' (26) - Ya-Sin (36)",
-      image: "/sab.jpg",
-    },
-    {
-      number: 6,
-      surahs: "As-Saffat (37) - Al-Hujurat (49)",
-      image: "/sabtu.jpg",
-    },
-    {
-      number: 7,
-      surahs: "Qaf (50) - An-Nas (114)",
-      image: "/ming.jpg",
-    },
+    { number: 1, surahs: "Al-Fatihah (1) - An-Nisa' (4)", image: "/sen.jpg" },
+    { number: 2, surahs: "Al-Ma'idah (5) - At-Tawbah (9)", image: "/sel.jpg" },
+    { number: 3, surahs: "Yunus (10) - An-Nahl (16)", image: "/rab.jpg" },
+    { number: 4, surahs: "Al-Isra' (17) - Al-Furqan (25)", image: "/kam.jpg" },
+    { number: 5, surahs: "Ash-Shu'ara' (26) - Ya-Sin (36)", image: "/sab.jpg" },
+    { number: 6, surahs: "As-Saffat (37) - Al-Hujurat (49)", image: "/sabtu.jpg" },
+    { number: 7, surahs: "Qaf (50) - An-Nas (114)", image: "/ming.jpg" },
   ];
 
   const fetchManzil = async (number) => {
@@ -56,7 +25,7 @@ export default function Manzil() {
         `https://api.alquran.cloud/v1/manzil/${number}/quran-uthmani`
       );
       const transRes = await fetch(
-        `https://api.alquran.cloud/v1/manzil/${number}/en.asad`
+        `https://api.alquran.cloud/v1/manzil/${number}/id.indonesian`
       );
 
       const arabData = await arabRes.json();
@@ -70,39 +39,44 @@ export default function Manzil() {
     }
   };
 
+  const toggleGlossary = () => {
+    setIsGlossaryOpen(!isGlossaryOpen);
+  };
+
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat font-optimaAlt"
+      className="min-h-screen bg-cover bg-center bg-no-repeat font-optimaAlt pt-16"
       style={{ backgroundImage: "url('/fix1.jpeg')" }}
     >
-      <nav className="bg-green-700 text-white px-6 py-4 shadow-md flex justify-between items-center">
+      <nav className="fixed top-0 left-0 right-0 bg-green-700 bg-opacity-90 text-white px-6 py-4 shadow-md flex justify-between items-center z-50">
         <div className="flex items-center gap-2">
           <img src="/fix.png" alt="logo" className="w-8 h-6" />
-          <h1 className="text-xl font-bold font-quattro">Al-Qur'an Digital</h1>
+          <h1 className="text-xl font-bold font-">SaQu</h1>
         </div>
-        <ul className="flex gap-6 text-sm font-medium">
+        <ul className="hidden md:flex gap-6 text-sm font-medium font-bold">
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
             <FontAwesomeIcon icon={faHome} />
-            <Link to="/home">Home</Link>
+            <Link to="/home" className="font-bold text-base">Home</Link>
           </li>
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
             <FontAwesomeIcon icon={faBookOpen} />
-            <Link to="/baca">Chapter</Link>
+            <Link to="/baca" className="font-bold text-base">Chapter</Link>
           </li>
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
-            <Link to="/cari">Find</Link>
+            <Link to="/cari" className="font-bold text-base">Find</Link>
           </li>
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
             <FontAwesomeIcon icon={faStarAndCrescent} />
-            <Link to="/asmaulhusna">Asmaul Husna</Link>
+            <Link to="/asmaulhusna" className="font-bold text-base">Asmaul Husna</Link>
           </li>
         </ul>
       </nav>
+      
       <div className="p-6">
         {!selectedManzil ? (
           <>
-            <h2 className="text-2xl font-bold text-center text-green-700 mb-6">
+            <h2 className="text-2xl font-bold text-center text-green-700 mb-6 font-optimaAlt">
               Daftar Manzil
             </h2>
             <div className="space-y-6">
@@ -145,7 +119,32 @@ export default function Manzil() {
           </div>
         )}
       </div>
-    </div>
+
+      <div
+  onClick={toggleGlossary}
+  className="fixed bottom-3 right-6 bg-green-700 text-white p-4 rounded-full cursor-pointer shadow-lg z-50"
+>
+  <FontAwesomeIcon icon={faCircleQuestion} className="text-2xl" />
+</div>
+
+{isGlossaryOpen && (
+  <div className="fixed bottom-24 right-6 bg-white p-6 rounded-lg shadow-lg w-72 max-h-72 overflow-y-auto z-50">
+    <button
+      onClick={toggleGlossary}
+      className="absolute top-2 right-2 text-green-700 font-bold"
+    >
+      X
+    </button>
+    <h3 className="text-xl font-bold text-green-700">Glosarium</h3>
+    <ul className="mt-4 text-sm text-gray-700 text-justify">
+      <li>
+        <strong>Manzil</strong> dalam konteks Al-Qur'an merujuk pada pembagian Al-Qur'an menjadi beberapa bagian yang lebih kecil, yang dikenal sebagai manzil. Tujuan utama dari pembagian ini adalah untuk mempermudah pembacaan dan penghafalan Al-Qur'an, serta memudahkan pembacaan setiap hari sehingga seseorang bisa menyelesaikan Al-Qur'an dalam waktu tertentu, seperti dalam 7 hari.
+      </li>
+    </ul>
+  </div>
+)}
+<Menu />
+</div>
   );
 }
 
