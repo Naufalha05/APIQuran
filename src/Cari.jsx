@@ -13,7 +13,7 @@ export default function Cari() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://api.alquran.cloud/v1/search/${query}/all/id.indonesian`
+        `https://api.alquran.cloud/v1/search/${query}/all/id.indonesian`
       );
       const data = await response.json();
       if (data.data && data.data.matches) {
@@ -40,7 +40,7 @@ export default function Cari() {
       <nav className="fixed top-0 left-0 right-0 bg-green-700 bg-opacity-90 text-white px-6 py-4 shadow-md flex justify-between items-center z-50">
         <div className="flex items-center gap-2">
           <img src="fix.png" alt="logo" className="w-8 h-6" />
-          <h1 className="text-xl font-bold font-quattro">Al-Qur'an Digital</h1>
+          <h1 className="text-xl font-bold font-optimaAlt">SaQu</h1>
         </div>
         <ul className="flex gap-6 text-sm font-medium font-bold">
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
