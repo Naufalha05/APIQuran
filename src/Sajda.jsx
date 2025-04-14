@@ -42,7 +42,7 @@ export default function Sajda() {
       <nav className="fixed top-0 left-0 right-0 bg-green-700 bg-opacity-90 text-white px-6 py-4 shadow-md flex justify-between items-center z-50">
         <div className="flex items-center gap-2">
           <img src="/fix.png" alt="logo" className="w-8 h-6" />
-          <h1 className="text-xl font-bold font-quattro">SaQu</h1>
+          <h1 className="text-xl font-bold font-optimaAlt">SaQu</h1>
         </div>
         <ul className="hidden md:flex gap-6 text-sm font-medium font-bold">
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">

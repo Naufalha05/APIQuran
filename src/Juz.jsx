@@ -33,7 +33,7 @@ export default function Juz() {
       <nav className="bg-green-700 text-white px-6 py-4 shadow-md flex justify-between items-center">
         <div className="flex items-center gap-2">
           <img src="/fix.png" alt="logo" className="w-8 h-6" />
-          <h1 className="text-xl font-bold font-quattro">Al-Qur'an Digital</h1>
+          <h1 className="text-xl font-bold font-optimaAlt">SaQu</h1>
         </div>
         <ul className="flex gap-6 text-base font-semibold">
           <li className="hover:text-yellow-300 cursor-pointer flex items-center gap-1">
